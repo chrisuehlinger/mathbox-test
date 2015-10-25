@@ -43,22 +43,6 @@ function dist(p1, p2) {
 mathboxDOM(
   'root',
   { id: '1', scale: 720, focus: 0.5 },
-  mathboxDOM('shader', { id: '3', code: '\n  uniform float time;\n  uniform float intensity;\n  uniform vec4 position;\n  uniform float velocity;\n  \n  vec4 warpVertex(vec4 xyzw, inout vec4 stpq) {\n    //xyzw +=   0.2 * intensity * (sin(xyzw.yzwx * 1.91 + time + sin(xyzw.wxyz * 1.74 + time)));\n    //xyzw +=   0.1 * intensity * (sin(xyzw.yzwx * 4.03 + time + sin(xyzw.wxyz * 2.74 + time)));\n    //xyzw +=  0.05 * intensity * (sin(xyzw.yzwx * 8.39 + time + sin(xyzw.wxyz * 4.18 + time)));\n    //xyzw += 0.025 * intensity * (sin(xyzw.yzwx * 15.1 + time + sin(xyzw.wxyz * 9.18 + time)));\n    \n    xyzw.x -= velocity * (xyzw.x - position.x);\n    xyzw.y -= velocity * (xyzw.y - position.y);\n    xyzw.z -= velocity * (xyzw.z - position.z);\n  \n    return xyzw;\n  }',
-    dynamictime: function (t) {
-      return t / 4;
-    }, dynamicintensity: function (t) {
-      t = t / 4;
-      var intensity = .5 + .5 * Math.cos(t / 3);
-      intensity = 1.0 - Math.pow(intensity, 4);
-      return intensity * 2.5;
-    },
-    dynamicposition: function (t) {
-      return new THREE.Vector4(three.camera.position.x * size, three.camera.position.y * size, three.camera.position.z * size, 0);
-      //return new THREE.Vector4(size/2, size/2, size/2, 0);
-    },
-    dynamicvelocity: function (t) {
-      return three.controls.totalMovementSpeed * 50;
-    } }),
   mathboxDOM(
     'vertex',
     { pass: 'view' },

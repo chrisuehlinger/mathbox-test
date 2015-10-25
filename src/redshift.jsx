@@ -40,37 +40,6 @@
     }
     
 <root id="1" scale={720} focus={0.5}>
-  <shader id="3" code={`
-  uniform float time;
-  uniform float intensity;
-  uniform vec4 position;
-  uniform float velocity;
-  
-  vec4 warpVertex(vec4 xyzw, inout vec4 stpq) {
-    //xyzw +=   0.2 * intensity * (sin(xyzw.yzwx * 1.91 + time + sin(xyzw.wxyz * 1.74 + time)));
-    //xyzw +=   0.1 * intensity * (sin(xyzw.yzwx * 4.03 + time + sin(xyzw.wxyz * 2.74 + time)));
-    //xyzw +=  0.05 * intensity * (sin(xyzw.yzwx * 8.39 + time + sin(xyzw.wxyz * 4.18 + time)));
-    //xyzw += 0.025 * intensity * (sin(xyzw.yzwx * 15.1 + time + sin(xyzw.wxyz * 9.18 + time)));
-    
-    xyzw.x -= velocity * (xyzw.x - position.x);
-    xyzw.y -= velocity * (xyzw.y - position.y);
-    xyzw.z -= velocity * (xyzw.z - position.z);
-  
-    return xyzw;
-  }`}
- dynamictime={(t) => t / 4} dynamicintensity={(t) => {
-        t = t / 4;
-        var intensity = .5 + .5 * Math.cos(t / 3);
-        intensity = 1.0 - Math.pow(intensity, 4);
-        return intensity * 2.5;
-      }}
-      dynamicposition={(t) => {
-        return new THREE.Vector4(three.camera.position.x*size, three.camera.position.y*size, three.camera.position.z*size, 0);
-        //return new THREE.Vector4(size/2, size/2, size/2, 0);
-      }} 
-      dynamicvelocity={(t) => {
-        return three.controls.totalMovementSpeed * 50;
-      }}/>
   <vertex pass="view">
   <transform position={[0.5, 0.5, 0.5]} scale={[0.5, 0.5, 0.5]}>
     <cartesian id="2" range={[[0, size], [0, size], [0, size]]} scale={[1, 1, 1]}>
